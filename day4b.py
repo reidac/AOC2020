@@ -24,13 +24,14 @@ def valid(dct):
         return False
 
     if 'hgt' in dct.keys():
-        v = dct['hgt']
-        h = int(v[:-2])
-        if v[-2:]=="cm":
-            if (h<150) or (h>193):
+        m = re.fullmatch('([0-9]+)(cm|in)',dct['hgt'])
+        if m is not None:
+            h = int(m.group(1))
+            u = m.group(2)
+            # The case where u is wrong doesn't occur, regexp handles that.
+            if (u=='cm') and ((h<150) or (h>193)):
                 return False
-        elif v[-2:]=="in":
-            if (h<59) or (h>76):
+            if (u=='in') and ((h<59) or (h>76)):
                 return False
         else:
             return False
