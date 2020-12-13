@@ -30,7 +30,11 @@ if __name__=="__main__":
     # Induction scheme.
     # Find the answer for the first pair, then increment along
     # successive first-pair answers until new data is satisifed,
-    # and proceed by induction.
+    # and proceed by induction.  NB if the bus frequencies are
+    # not all prime, need to replace the "prd *=" with a
+    # least-common multiple operation to get the lowest
+    # case.  This is the "seive" method of the Chinese
+    # Remainer Theorem, it turns out.
     res = dep_dict[dep_list[0]]
     prd = dep_dict[dep_list[0]]
     for v in dep_list[1:]:
