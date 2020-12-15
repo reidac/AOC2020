@@ -4,20 +4,18 @@ input = [15,5,1,4,7,0]
 
 
 if __name__=="__main__":
-    lastpos = {}
+    lastpos = [-1]*30000000
     for i in range(len(input)-1):
         lastpos[input[i]]=(i+1) # Counts from 1.
     tailval = input[-1] # Input value not yet added to lastpos dictionary.
     pos = len(input)  # Position of the tail of the sequence.
     done = False
     #
-    # For part 2, the "naive" algorithm gets to 30 million
-    # in 1 m 10s on the Rpi4.  Sufficient, but probably
-    # not optimal.
+    # For part 2, it turns out that array look-up is faster
+    # than dictionary look-up, by about 20% in this case.
     while not done:
-        try:
-            tailpos = lastpos[tailval]
-        except KeyError:
+        tailpos = lastpos[tailval]
+        if (tailpos==-1):
             newval = 0
         else:
             newval = pos-tailpos
@@ -27,7 +25,5 @@ if __name__=="__main__":
             done = True
             print("Value at %d: %d." % (pos+1,newval))
         pos += 1
-        if (pos%100000)==0: # Reassurance.
-            print(pos)
         
             
